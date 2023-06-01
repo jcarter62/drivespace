@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>System Disk Status</title>
+</head>
+<body>
+    <h1>System Disk Status</h1>
+    <table>
+        <thead>
+            <td>System</td>
+            <td>Drive</td>
+            <td>Total Space</td>
+            <td>Used Space</td>
+            <td>Free Space</td>
+            <td>Pct Free</td>
+            <td>Issue?</td>
+        </thead>
+        <tbody>
+        {% for s in systems %}
+        <tr>
+            <td>{{ s.sysname }}</td>
+            <td>{{ s.drive }}</td>
+            <td>{{ s.totalGB }}</td>
+            <td>{{ s.usedGB }}</td>
+            <td>{{ s.freeGB }}</td>
+            <td>{{ s.freepct }}</td>
+            <td>{{ s.msg }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<style>
+    table, th, td {
+        border: 1px solid darkgrey;
+        border-collapse: collapse;
+    }
+    table {
+        width: 100%;
+    }
+</style>
+
+
+</body>
+</html>
