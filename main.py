@@ -121,7 +121,7 @@ async def db(request: Request):
         else:
             one["sysname"] = ""
 
-
+        one["timestamp"] = r[1]
         one["drive"] = r[2]
         one["totalGB"] = r[7]
         one["usedGB"] = r[8]

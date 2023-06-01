@@ -15,6 +15,7 @@
             <td>Free Space</td>
             <td>Pct Free</td>
             <td>Issue?</td>
+            <td>Time</td>
         </thead>
         <tbody>
         {% for s in systems %}
@@ -26,6 +27,7 @@
             <td>{{ s.freeGB }}</td>
             <td>{{ s.freepct }}</td>
             <td>{{ s.msg }}</td>
+            <td>{{ s.timestamp }}</td>
         </tr>
         {% endfor %}
         </tbody>
