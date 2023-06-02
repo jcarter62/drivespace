@@ -81,14 +81,14 @@ def save_fixed_drives_to_db(sysinfo: dict):
                 "timestamp": sysinfo["timestamp"],
                 "drive": drive["drive"],
                 "drivetype": drive["type"],
-                "drivename": drive["info"]["name"],
-                "driveserial": drive["info"]["serial"],
-                "drivefilesystem": drive["info"]["filesystem"],
-                "totalGB": round(drive["info"]["total"],2),
-                "usedGB": round(drive["info"]["used"],2),
-                "freeGB": round(drive["info"]["free"],2),
-                "freepct": round(drive["info"]["freepct"],2),
-                "usedpct": round(drive["info"]["usedpct"],2),
+                "drivename": drive["name"],
+                "driveserial": drive["serial"],
+                "drivefilesystem": drive["format"],
+                "totalGB": round(drive["total"],2),
+                "usedGB": round(drive["used"],2),
+                "freeGB": round(drive["free"],2),
+                "freepct": round(drive["freepct"],2),
+                "usedpct": round(drive["usedpct"],2),
                 "key": drivekey
             }
         )
