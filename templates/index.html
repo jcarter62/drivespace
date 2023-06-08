@@ -5,21 +5,37 @@
     <title>System Disk Status</title>
 </head>
 <body>
-    <h1>System Disk Status</h1>
+<center><h1><font color="#000080">System Disk Status</font></h1></center>
     <table>
-        <thead>
-            <td>System</td>
-            <td>Drive</td>
-            <td>Total Space</td>
-            <td>Used Space</td>
-            <td>Free Space</td>
-            <td>Pct Free</td>
-            <td>Issue?</td>
-            <td>Time</td>
+        <thead bgcolor="#0096FF">
+            <th>System</th>
+            <th>Drive</th>
+            <th>Total Space</th>
+            <th>Used Space</th>
+            <th>Free Space</th>
+            <th>Pct Free</th>
+            <th>Issue?</th>
+            <th>Time</th>
+            <th>Days</th>
         </thead>
         <tbody>
         {% for s in systems %}
-        <tr>
+
+        {% if 1 < s.days <= 2 %}
+        <tr bgcolor="#FFFF00">
+
+        {% elif s.days > 2 %}
+        <tr bgcolor="#FFA500">
+
+        {% elif s.msg %}
+        <tr bgcolor="#F70D1A">
+
+        {% elif (s.row % 2) == 0  %}
+        <tr bgcolor="#FFFFFF">
+
+        {% else %}
+        <tr bgcolor="#ABEBC6">
+        {% endif %}
             <td>{{ s.sysname }}</td>
             <td>{{ s.drive }}</td>
             <td>{{ s.totalGB }}</td>
@@ -28,21 +44,39 @@
             <td>{{ s.freepct }}</td>
             <td>{{ s.msg }}</td>
             <td>{{ s.timestamp }}</td>
+            <td>{{ s.days }}</td>
         </tr>
         {% endfor %}
+        <tr bgcolor="#0096FF" height="25"><td colspan="9"> </td></tr>
         </tbody>
-    </table>
+    </table><br><br>
+    <table>
+        <tr bgcolor="#0096FF" ><th>Color</th><th>Description</th></tr>
+        <tr bgcolor="#F70D1A"><td>Red</td><td>System drive free space is less than minimum percentage.</td></tr>
+        <tr bgcolor="#FFA500"><td>Orange</td><td>System information is more than 2 days old.</td></tr>
+        <tr bgcolor="#FFFF00"><td>Yellow</td><td>System information is 2 days old.</td></tr>
+        <tr bgcolor="#ABEBC6"><td>Green</td><td>System information is current but displayed in odd row.</td></tr>
+        <tr bgcolor="#FFFFFF"><td>White</td><td>System information is current but displayed in even row.</td></tr>
+        <tr bgcolor="0096FF" height="25"><td colspan="2"> </td></tr>
+    </table><br><br><br>
 
 <style>
     table, th, td {
         border: 1px solid darkgrey;
         border-collapse: collapse;
+        align: center;
     }
     table {
         width: 100%;
     }
+#    tr:nth-child(even)
+#    {
+#        #background-color: #ffffff;
+#    }
+#    tr:nth-child(odd)
+#    {
+#        background-color: #ABEBC6;
+#    }
 </style>
-
-
 </body>
 </html>

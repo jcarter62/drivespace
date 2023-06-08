@@ -113,6 +113,7 @@ async def db(request: Request):
     minpct = float(config("MINPCT"))
     sysname = ""
     systems = []
+    i = 0
     for r in rows:
         one = {}
         if r[0] != sysname:
@@ -135,6 +136,13 @@ async def db(request: Request):
 
         if r[10] < minpct:
             one["msg"] += "<MinPct"
+
+        d1 = datetime.strptime(datetime.now().strftime("%Y/%m/%d"), "%Y/%m/%d")
+        d2 = datetime.strptime(datetime.fromisoformat(r[1]).strftime("%Y/%m/%d"), "%Y/%m/%d")
+        d3 = d1 - d2
+        one["days"] = d3.days
+        i = i + 1
+        one["row"] = i
 
         systems.append(one)
 
