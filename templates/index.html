@@ -20,22 +20,7 @@
         </thead>
         <tbody>
         {% for s in systems %}
-
-        {% if 1 < s.days <= 2 %}
-        <tr bgcolor="#FFFF00">
-
-        {% elif s.days > 2 %}
-        <tr bgcolor="#FFA500">
-
-        {% elif s.msg %}
-        <tr bgcolor="#F70D1A">
-
-        {% elif (s.row % 2) == 0  %}
-        <tr bgcolor="#FFFFFF">
-
-        {% else %}
-        <tr bgcolor="#ABEBC6">
-        {% endif %}
+            <tr bgcolor={{ s.color }}>
             <td>{{ s.sysname }}</td>
             <td>{{ s.drive }}</td>
             <td>{{ s.totalGB }}</td>

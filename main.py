@@ -144,8 +144,24 @@ async def db(request: Request):
         i = i + 1
         one["row"] = i
 
-        systems.append(one)
+        one["color"] = ""
 
+        if i % 2 == 0:
+            one["color"] = "#FFFFFF"
+
+        if i % 2 == 1:
+            one["color"] = "#ABEBC6"
+
+        if 1 < one["days"] <= 2:
+            one["color"] = "#FFFF00"
+
+        if one["days"] > 2:
+            one["color"] = "#FFA500"
+
+        if one["msg"]:
+            one["color"] = "#F70D1A"
+
+        systems.append(one)
 
     return templates.TemplateResponse(
         "index.html",
