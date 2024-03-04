@@ -14,7 +14,7 @@
             <th>Used Space</th>
             <th>Free Space</th>
             <th>Pct Free</th>
-            <th>Issue?</th>
+            <th>&nbsp;</th>
             <th>Time</th>
             <th>Days</th>
         </thead>
@@ -27,9 +27,18 @@
             <td>{{ s.usedGB }}</td>
             <td>{{ s.freeGB }}</td>
             <td>{{ s.freepct }}</td>
-            <td>{{ s.msg }}</td>
+            <td>
+                {{ s.msg.strip() }}
+            </td>
             <td>{{ s.timestamp }}</td>
-            <td>{{ s.days }}</td>
+            <td>
+                {{ s.days }}&nbsp;
+                {% if s.days > 30 %}
+                    <a href="/delete/{{ s.key }}">
+                        <img src="{{ url_for('static', path='/delete-forever-outline.svg')}}" height="20" width="20"/>
+                    </a>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
         <tr bgcolor="#0096FF" height="25"><td colspan="9"> </td></tr>

@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 # import win32api, win32file, win32con
 from datetime import datetime
 from decouple import config
@@ -10,6 +11,8 @@ from starlette.templating import Jinja2Templates
 templates = Jinja2Templates(directory="templates")
 
 app = FastAPI()
+
+app.mount("/static", app=StaticFiles(directory="static"), name="static")
 
 # create DB if does not exist
 create_db()
@@ -128,6 +131,7 @@ async def db(request: Request):
         one["usedGB"] = r[8]
         one["freeGB"] = r[9]
         one["freepct"] = r[10]
+        one["key"] = r[12]
 
         one["msg"] = ""
 
@@ -167,3 +171,19 @@ async def db(request: Request):
         "index.html",
         {"request": request, "systems": systems})
 
+
+@app.get("/delete/{id}", response_class=HTMLResponse)
+async def row_delete(request: Request, id: str):
+    dbfile = config("DBFILE")
+    conn = sqlite3.connect(dbfile)
+    c = conn.cursor()
+    c.execute(
+        """DELETE FROM client_disk_status WHERE key = :id""",
+        {"id": id}
+    )
+    conn.commit()
+    conn.close()
+
+    # redirect to /db/
+    response = RedirectResponse(url="/db/")
+    return response
