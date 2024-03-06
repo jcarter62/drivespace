@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         {% for s in systems %}
-            <tr bgcolor={{ s.color }}>
+            <tr bgcolor={{ s.color }} id="{{ s.key }}">
             <td>{{ s.sysname }}</td>
             <td>{{ s.drive }}</td>
             <td>{{ s.totalGB }}</td>
@@ -34,9 +34,9 @@
             <td>
                 {{ s.days }}&nbsp;
                 {% if s.days > 30 %}
-                    <a href="/delete/{{ s.key }}">
-                        <img src="{{ url_for('static', path='/delete-forever-outline.svg')}}" height="20" width="20"/>
-                    </a>
+                        <img src="{{ url_for('static', path='/delete-forever-outline.svg')}}" height="20" width="20"
+                        onclick="deleteRow('{{ s.key }}');"
+                        >
                 {% endif %}
             </td>
         </tr>
@@ -66,14 +66,23 @@
     h1 {
         color: #000080;
     }
-#    tr:nth-child(even)
-#    {
-#        #background-color: #ffffff;
-#    }
-#    tr:nth-child(odd)
-#    {
-#        background-color: #ABEBC6;
-#    }
+
+    .strikethrough {
+        text-decoration: line-through;
+    }
+
+
 </style>
 </body>
+<script>
+    function deleteRow(rowid) {
+        var elem_id = document.getElementById(rowid);
+        elem_id.classList.add('strikethrough');
+        // Call the server to delete the row from the database
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/delete/" + rowid, false);
+        xhr.send();
+    }
+</script>
+
 </html>

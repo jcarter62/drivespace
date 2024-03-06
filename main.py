@@ -172,7 +172,8 @@ async def db(request: Request):
         {"request": request, "systems": systems})
 
 
-@app.get("/delete/{id}", response_class=HTMLResponse)
+
+@app.post("/delete/{id}")
 async def row_delete(request: Request, id: str):
     dbfile = config("DBFILE")
     conn = sqlite3.connect(dbfile)
@@ -183,7 +184,4 @@ async def row_delete(request: Request, id: str):
     )
     conn.commit()
     conn.close()
-
-    # redirect to /db/
-    response = RedirectResponse(url="/db/")
-    return response
+    return {"message": "ok"}, 200
